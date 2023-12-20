@@ -1,25 +1,44 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import store from '@/store';
+import Home from '@/views/Home.vue';
+import NotFound from '@/views/NotFound.vue';
+import CocktailDetail from '@/views/CocktailDetail.vue';
 
-const routes: Array<RouteRecordRaw> = [
+
+const drinks = [
+  { path: 'margarita'},
+  { path: 'mojito'},
+  { path: 'a1'},
+  { path: 'kir'},
+];
+
+const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    redirect: '/margarita'
   },
+  ...drinks.map((drink) => ({
+    path: `/${drink.path}`,
+    component: CocktailDetail,
+  })),
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
-]
+    path: '/:pathMatch(.*)',
+    component: NotFound,
+  },
+]   
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  routes,
+});
 
-export default router
+router.beforeEach((to, from, next) => {
+  const code = to.path.replace('/','');
+  store.dispatch('fetchCocktail', code);
+  next();
+});
+  
+
+
+
+export default router;

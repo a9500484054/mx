@@ -1,30 +1,50 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div class="body">
+
+    <Menu />
+
+    <router-view></router-view>
+
+  </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
 
-nav {
-  padding: 30px;
+import Menu from '@/components/Menu.vue'
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+export default {
+  components: {  
+    Menu,
+  },  
+  data() {
+    return {
+      currentCocktail: '',
+    };
+  },
+  created() {
+
+  },
+  methods: {
+  
   }
+};
+</script>
+
+<style lang="scss" >
+@import url(https://fonts.googleapis.com/css?family=Quicksand:400,300); 
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
+
+body {
+  height: 100%;
+  width: 100%;
+  color: white;
+  font-size: 18px;
+  font-weight: 400;
+  font-family: 'Quicksand', 'Open Sans', 'Helvetica Neue', 'Helvetica', sans-serif;
+  background-color: #090909a1 !important;
+  background-size:cover;
+  
 }
+
 </style>
